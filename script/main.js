@@ -1,21 +1,37 @@
-const loadData = async () => {
-  const res = await fetch(
-    "https://openapi.programming-hero.com/api/videos/category/1000"
-  );
-
-  const data = await res.json();
-  const categories = data.data
-  displayMainHandelar(categories)
+const loadData = async (id) => {
+  try {
+    const res = await fetch(
+      `https://openapi.programming-hero.com/api/videos/category/${id}`
+    );
+    const data = await res.json();
+    const categories = data.data;
+    displayMainHandelar(categories);
+    if (categories.length < 1) {
+      throw "/images/error-page.png";
+    }
+  } catch (error) {
+    // console.log(error)
+    const cardsContainer = document.getElementById("cards_container");
+    cardsContainer.classList = `container mx-auto`
+    cardsContainer.innerHTML = `
+        <div class="flex justify-center flex-col items-center">
+            <img class="w-44 mb-6" src="${error}" alt="Error"/>
+            <h2 class="text-2xl font-bold">Opps! Sorry, Ther is no content here<h2/>
+        </div>
+        `;
+  }
 };
 
 // display main handelar:
 const displayMainHandelar = (categories) => {
-    const cardsContainer = document.getElementById('cards_container');
-    categories.forEach(category => {
-    const {thumbnail, title, authors, others  } = category;
-        
-    const div = document.createElement('div');
-    div.classList = `card bg-base-100 shadow-xl`
+  const cardsContainer = document.getElementById("cards_container");
+  cardsContainer.innerHTML = "";
+
+  categories.forEach((category) => {
+    const { thumbnail, title, authors, others } = category;
+
+    const div = document.createElement("div");
+    div.classList = `card bg-base-100 shadow-xl`;
 
     div.innerHTML = `
         <figure>
@@ -35,10 +51,39 @@ const displayMainHandelar = (categories) => {
             <p>${others?.views} Views</p>
             </div>
         </div>
-    ` ;
-    cardsContainer.appendChild(div);   
+    `;
+    cardsContainer.appendChild(div);
+  });
+};
+
+// load buttons data:
+const loadButtons = async () => {
+  const res = await fetch(
+    "https://openapi.programming-hero.com/api/videos/categories"
+  );
+  const data = await res.json();
+  const buttons = data.data;
+  displayButtonsHandelar(buttons);
+};
+
+// display buttons:
+const displayButtonsHandelar = (buttons) => {
+  const buttonsContainer = document.getElementById("buttons_container");
+
+  buttons.forEach((button) => {
+    const btn = document.createElement("button");
+    btn.classList = `btn font-semibold`;
+    btn.innerText = button.category;
+    btn.setAttribute("id", `${button.category_id}`);
+    buttonsContainer.appendChild(btn);
+
+    // sort category by calling api by id:
+    btn.addEventListener("click", (evnet) => {
+      loadData(evnet.target.id);
     });
+  });
+};
 
-}
+loadButtons();
 
-loadData()
+loadData("1000");
