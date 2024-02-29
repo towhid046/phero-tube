@@ -12,11 +12,10 @@ const loadData = async (id) => {
   } catch (error) {
     // console.log(error)
     const cardsContainer = document.getElementById("cards_container");
-    cardsContainer.classList = `container mx-auto`
     cardsContainer.innerHTML = `
-        <div class="flex justify-center flex-col items-center">
-            <img class="w-44 mb-6" src="${error}" alt="Error"/>
-            <h2 class="text-2xl font-bold">Opps! Sorry, Ther is no content here<h2/>
+        <div class="col-span-4 container text-center ">
+            <img class="w-44 mb-6 mx-auto" src="${error}" alt="Error"/>
+            <h2 class="text-2xl  font-bold">Opps! Sorry, Ther is no content here<h2/>
         </div>
         `;
   }
@@ -64,26 +63,45 @@ const loadButtons = async () => {
   const data = await res.json();
   const buttons = data.data;
   displayButtonsHandelar(buttons);
+  //   set color to all for the first time
+  setColorById("1000");
 };
 
 // display buttons:
 const displayButtonsHandelar = (buttons) => {
   const buttonsContainer = document.getElementById("buttons_container");
+  buttonsContainer.innerHTML = `
+    <ul class="flex justify-center gap-5">
+    ${buttons
+      .map(
+        (button) =>
+          `<button onclick="categoryBtnClickHandelar(${button.category_id})" id="${button.category_id}" class="categories-btns btn font-semibold hover:bg-red-500">${button.category}</button>`
+      )
+      .join("")}
+    </ul>
+    `;
+};
 
-  buttons.forEach((button) => {
-    const btn = document.createElement("button");
-    btn.classList = `btn font-semibold`;
-    btn.innerText = button.category;
-    btn.setAttribute("id", `${button.category_id}`);
-    buttonsContainer.appendChild(btn);
+// category btn click handelar:
+const categoryBtnClickHandelar = (buttonId) => {
+  const categoriesBtns = document.querySelectorAll(".categories-btns");
+  loadData(buttonId);
+  removeColor(categoriesBtns);
+  setColorById(buttonId);
+};
 
-    // sort category by calling api by id:
-    btn.addEventListener("click", (evnet) => {
-      loadData(evnet.target.id);
-    });
+const setColorById = (id) => {
+  const element = document.getElementById(id);
+  element.classList.add("bg-red-500");
+  element.classList.add("text-white");
+};
+// const setColorAndBgById = (btn, id) => {}
+const removeColor = (categoriesBtns) => {
+  categoriesBtns.forEach((btn) => {
+    btn.classList.remove("bg-red-500");
+    btn.classList.remove("text-white");
   });
 };
 
 loadButtons();
-
 loadData("1000");
