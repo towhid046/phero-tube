@@ -1,13 +1,14 @@
-const loadData = async (id) => {
+const loadData = async (id, isSort) => {
   try {
     const res = await fetch(
       `https://openapi.programming-hero.com/api/videos/category/${id}`
     );
     const data = await res.json();
-    const categories = data.data;
+    let categories = data.data;
     if (categories.length < 1) {
       throw "/images/error-page.png";
     } else {
+      isSort && sortTheCatagories(categories);
       displayMainHandelar(categories);
     }
   } catch (error) {
@@ -106,6 +107,21 @@ const removeColor = (categoriesBtns) => {
     btn.classList.remove("bg-red-500");
     btn.classList.remove("text-white");
   });
+};
+
+// sort by view button click handelar:
+const sortViewBtnClickHandelar = () => {
+  const isSort = true;
+  loadData("1000", isSort);
+};
+
+// sort the categories
+const sortTheCatagories = (categories) => {
+  categories = categories.sort((e1, e2) =>
+    parseFloat([e1.others.views].pop()) < parseFloat([e2.others.views].pop())
+      ? 1
+      : -1
+  );
 };
 
 loadButtons();
