@@ -5,19 +5,14 @@ const loadData = async (id) => {
     );
     const data = await res.json();
     const categories = data.data;
-    displayMainHandelar(categories);
     if (categories.length < 1) {
       throw "/images/error-page.png";
+    } else {
+      displayMainHandelar(categories);
     }
   } catch (error) {
-    // console.log(error)
     const cardsContainer = document.getElementById("cards_container");
-    cardsContainer.innerHTML = `
-        <div class="col-span-4 container text-center ">
-            <img class="w-44 mb-6 mx-auto" src="${error}" alt="Error"/>
-            <h2 class="text-2xl  font-bold">Opps! Sorry, Ther is no content here<h2/>
-        </div>
-        `;
+    errorPage(error, cardsContainer);
   }
 };
 
@@ -55,6 +50,15 @@ const displayMainHandelar = (categories) => {
   });
 };
 
+// error page:
+const errorPage = (error, cardsContainer) => {
+  cardsContainer.innerHTML = `
+    <div class="col-span-4 container text-center ">
+        <img class="w-44 mb-6 mx-auto" src="${error}" alt="Error"/>
+        <h2 class="text-2xl  font-bold">Opps! Sorry, Ther is no content here<h2/>
+    </div>
+    `;
+};
 // load buttons data:
 const loadButtons = async () => {
   const res = await fetch(
@@ -95,6 +99,7 @@ const setColorById = (id) => {
   element.classList.add("bg-red-500");
   element.classList.add("text-white");
 };
+
 // const setColorAndBgById = (btn, id) => {}
 const removeColor = (categoriesBtns) => {
   categoriesBtns.forEach((btn) => {
