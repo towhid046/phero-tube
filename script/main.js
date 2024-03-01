@@ -118,9 +118,7 @@ const sortViewBtnClickHandelar = () => {
 // sort the categories
 const sortTheCatagories = (categories) => {
   categories = categories.sort((e1, e2) =>
-    parseFloat([e1.others.views].pop()) < parseFloat([e2.others.views].pop())
-      ? 1
-      : -1
+    parseFloat([e2.others.views].pop()) - parseFloat([e1.others.views].pop())
   );
 };
 
