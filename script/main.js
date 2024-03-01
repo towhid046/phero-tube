@@ -1,3 +1,6 @@
+// declare for truck the selected button:
+let setectedCategoryId = '1000';
+
 const loadData = async (id, isSort) => {
   try {
     const res = await fetch(
@@ -89,6 +92,7 @@ const displayButtonsHandelar = (buttons) => {
 
 // category btn click handelar:
 const categoryBtnClickHandelar = (buttonId) => {
+  setectedCategoryId = buttonId;
   const categoriesBtns = document.querySelectorAll(".categories-btns");
   loadData(buttonId);
   removeColor(categoriesBtns);
@@ -112,17 +116,7 @@ const removeColor = (categoriesBtns) => {
 // sort by view button click handelar:
 const sortViewBtnClickHandelar = () => {
   const isSort = true;
-  const categoriesBtns = document.querySelectorAll(".categories-btns");
-  // console.log(categoriesBtns)
-  let id = "";
-  categoriesBtns.forEach((btn) => {
-    const targetBtnId = btn.classList[btn.classList.length - 1];
-    if (targetBtnId === "text-white") {
-      id = btn.id;
-    }
-  });
-
-  loadData(id, isSort);
+  loadData(setectedCategoryId, isSort);
 };
 
 // sort the categories
