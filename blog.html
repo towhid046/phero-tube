@@ -14,8 +14,7 @@
   </head>
   <body>
     <header class="">
-      <!-- navbar -->
-      <nav class="shadow-sm">
+      <nav class="shadow-sm mb-12">
         <div class="navbar bg-base-100 mx-auto container">
           <div class="navbar-start">
             <div class="dropdown">
@@ -35,51 +34,30 @@
                   />
                 </svg>
               </div>
-              <ul
-                tabindex="0"
-                class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <a
-                    onclick="sortViewBtnClickHandelar()"
-                    class="font-semibold btn btn-error text-white"
-                    >Sort by view</a
-                  >
-                </li>
-              </ul>
             </div>
-            <a href="/index.html" class="btn btn-ghost text-2xl font-bold">Phero Tube</a>
-          </div>
-          <div class="navbar-center hidden lg:flex">
-            <ul class="menu menu-horizontal px-1">
-              <li>
-                <a onclick="sortViewBtnClickHandelar()" class="font-semibold btn btn-error text-white"
-                  >Sort by view</a
-                >
-              </li>
-            </ul>
+            <a href="/index.html" class="btn btn-ghost text-2xl font-bold"
+              >Phero Tube</a
+            >
           </div>
           <div class="navbar-end">
             <a href="/blog.html" class="btn">Blog</a>
           </div>
         </div>
       </nav>
-
-      <!-- hero buttons -->
-      <div id="buttons_container" class="py-7"></div>
     </header>
-    <main class="container px-4 mx-auto py-8">
-      <!-- cards section -->
-      <section
-        id="cards_container"
-        class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4"
-      >
-        <!-- card will inject here -->
-      </section>
-    </main>
-    <footer></footer>
-
-    <!-- js link -->
-    <script src="/script/main.js"></script>
+    <section class="container mx-auto px-6 space-y-7">
+      <h1 class="text-5xl font-semibold text-center">This is blog page</h1>
+      <p>
+        Discuss the scope of var, let, and const Var: 1.The scope of a var
+        variable is functional scope. 2.It can be updated and re-declared into
+        the scope. 3.It can be declared without initialization. Let: 1.The scope
+        of a let variable is block scope. 2.It can be updated but cannot be
+        re-declared into the scope. 3.It can be declared without initialization.
+        Const: 1.The scope of a const variable is block scope. 2.It cannot be
+        updated or re-declared into the scope. 3.It cannot be declared without
+        initialization.
+      </p>
+    </section>
+    <!-- js -->
   </body>
 </html>
