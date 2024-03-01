@@ -112,13 +112,24 @@ const removeColor = (categoriesBtns) => {
 // sort by view button click handelar:
 const sortViewBtnClickHandelar = () => {
   const isSort = true;
-  loadData("1000", isSort);
+  const categoriesBtns = document.querySelectorAll(".categories-btns");
+  // console.log(categoriesBtns)
+  let id = "";
+  categoriesBtns.forEach((btn) => {
+    const targetBtnId = btn.classList[btn.classList.length - 1];
+    if (targetBtnId === "text-white") {
+      id = btn.id;
+    }
+  });
+
+  loadData(id, isSort);
 };
 
 // sort the categories
 const sortTheCatagories = (categories) => {
-  categories = categories.sort((e1, e2) =>
-    parseFloat([e2.others.views].pop()) - parseFloat([e1.others.views].pop())
+  categories = categories.sort(
+    (e1, e2) =>
+      parseFloat([e2.others.views].pop()) - parseFloat([e1.others.views].pop())
   );
 };
 
